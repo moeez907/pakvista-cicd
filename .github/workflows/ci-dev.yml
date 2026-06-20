@@ -1,0 +1,29 @@
+name: ci_pr_develop
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  pr_dev_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v6
+
+      - name: Build Docker Image
+        run: docker image build . -t moeez907/pakvista:latest
+
+      - name: See the Image
+        run: docker image ls
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push Docker Image on Docker Hub
+        run: docker image push moeez907/pakvista:latest
