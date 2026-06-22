@@ -1,0 +1,76 @@
+name: ci_staging
+
+on:
+  pull_request:
+    branches:
+      - staging
+
+jobs:
+  ci_staging_job:
+    runs-on: ubuntu-latest
+
+    env:
+      IMAGE_NAME: moeez907/pakvista
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Linting and Build Tools
+        run: |
+          npm init -y
+          npm install --save-dev htmlhint stylelint stylelint-config-standard parcel
+
+      - name: Create Stylelint Config
+        run: |
+          cat > .stylelintrc.json << 'EOF'
+          {
+            "extends": "stylelint-config-standard"
+          }
+          EOF
+
+      - name: Lint HTML Files
+        run: npx htmlhint "*.html"
+
+      - name: Lint CSS Files
+        run: npx stylelint "*.css"
+
+      - name: Build Static Website with Parcel
+        run: |
+          npx parcel build index.html lahore.html hunza.html karachi.html swat.html --dist-dir dist --public-url ./
+
+      - name: Set Short SHA
+        run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          load: true
+          tags: |
+            ${{ env.IMAGE_NAME }}:staging-latest
+            ${{ env.IMAGE_NAME }}:staging-${{ env.SHORT_SHA }}
+
+      - name: See Docker Images
+        run: docker images
+
+      - name: Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.IMAGE_NAME }}:staging-latest
+            ${{ env.IMAGE_NAME }}:staging-${{ env.SHORT_SHA }}
