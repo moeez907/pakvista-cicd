@@ -6,7 +6,7 @@ on:
       - production
 
 jobs:
-  pr_prod_job:
+  pr_dev_job:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,9 +14,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build Docker Image
-        run: |
-          docker build -t moeez907/pakvista:prod-latest .
-          docker tag moeez907/pakvista:prod-latest moeez907/pakvista:prod-${{ github.sha }}
+        run: docker build -t moeez907/pakvista:prod-latest .
 
       - name: See Docker Images
         run: docker images
@@ -28,30 +26,4 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Push Docker Image
-        run: |
-          docker push moeez907/pakvista:prod-latest
-          docker push moeez907/pakvista:prod-${{ github.sha }}
-
-      - name: Setup Node for screenshot capture
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - name: Install Playwright and capture page screenshots
-        run: |
-          npm install
-          npx playwright install chromium --with-deps
-          python3 -m http.server 8765 &
-          SERVER_PID=$!
-          sleep 2
-          node scripts/capture-screenshots.mjs \
-            --base http://127.0.0.1:8765 \
-            --out screenshots/ci-prod
-          kill $SERVER_PID
-
-      - name: Upload CI verification screenshots
-        uses: actions/upload-artifact@v4
-        with:
-          name: ci-prod-screenshots-${{ github.sha }}
-          path: screenshots/ci-prod/
-          if-no-files-found: error
+        run: docker push moeez907/pakvista:prod-latest
