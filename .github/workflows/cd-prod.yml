@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: "production"
-      url: https://taskflow-latest-ojkj.onrender.com/
+      url: https://pakvista-prod-latest-jfi0.onrender.com
     steps:
       - name: Welcome Step
         run: echo "Deploying On Render"
