@@ -13,6 +13,6 @@ jobs:
       - name: Welcome Step
         run: echo "Deploying On Render"
       - name: Deploying On Render
-        run: curl -X POST ${{secrets.RENDER_DEPLOY_HOOK_STAGING_URL}}
+        run: curl -X POST ${{secrets.RENDER_DEPLOY_HOOK_PRODUCTION_URL}}
       - name: Deployment Success 
         run: echo "Successfully Deployed App On Render"
