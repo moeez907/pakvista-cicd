@@ -1,0 +1,13 @@
+{
+  "name": "pakvista-cicd",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "postinstall": "playwright install chromium",
+    "screenshots": "node scripts/capture-screenshots.mjs",
+    "member5:steps": "bash scripts/run-member5-steps.sh"
+  },
+  "devDependencies": {
+    "playwright": "^1.52.0"
+  }
+}
