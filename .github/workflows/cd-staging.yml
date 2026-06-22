@@ -1,0 +1,18 @@
+name: cd-staging
+on:
+  push:
+    branches:
+      - staging
+jobs:
+  deploy-on-render:
+    runs-on: ubuntu-latest
+    environment:
+      name: "staging"
+      url: https://taskflow-latest-ojkj.onrender.com/
+    steps:
+      - name: Welcome Step
+        run: echo "Deploying On Render"
+      - name: Deploying On Render
+        run: curl -X POST ${{secrets.RENDER_DEPLOY_HOOK_STAGING_URL}}
+      - name: Deployment Success 
+        run: echo "Successfully Deployed App On Render"

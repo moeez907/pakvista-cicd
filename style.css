@@ -102,6 +102,61 @@ body {
 }
 
 
+/* Hero Backgrounds for Cities */
+
+.hero-hunza {
+    background:
+    linear-gradient(rgba(0,0,0,0.5),
+    rgba(0,0,0,0.5)),
+    url("https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=1200&h=600&fit=crop&q=80");
+    background-size: cover;
+    background-position: center;
+}
+
+
+.hero-karachi {
+    background:
+    linear-gradient(rgba(0,0,0,0.5),
+    rgba(0,0,0,0.5)),
+    url("https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1200&h=600&fit=crop&q=80");
+    background-size: cover;
+    background-position: center;
+}
+
+
+.hero-swat {
+    background:
+    linear-gradient(rgba(0,0,0,0.5),
+    rgba(0,0,0,0.5)),
+    url("https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=600&fit=crop&q=80");
+    background-size: cover;
+    background-position: center;
+}
+
+
+/* Image Styling */
+
+figure img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    margin: 20px auto;
+    display: block;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+
+section img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    margin: 20px auto;
+    display: block;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
 
 /* Navigation */
 
