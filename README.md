@@ -1,1 +1,0 @@
-# PakVista CI/CD
